@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Camera With Filters App</string>
+
+    <!-- Messages -->
+    <string name="message_something_went_wrong">Something went wrong</string>
+    <!---->
+</resources>
