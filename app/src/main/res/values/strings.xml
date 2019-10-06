@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Camera With Filters App</string>
 
+    <!-- Camera screen -->
+    <string name="camera_button_take_snapshot">Take snapshot</string>
+    <!---->
+
     <!-- Messages -->
     <string name="message_something_went_wrong">Something went wrong</string>
     <!---->

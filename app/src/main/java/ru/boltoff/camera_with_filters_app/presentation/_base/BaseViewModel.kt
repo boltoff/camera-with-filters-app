@@ -1,4 +1,4 @@
-package lv.slyfox.carguru.camera_with_filters_app.presentation._base
+package ru.boltoff.camera_with_filters_app.presentation._base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
