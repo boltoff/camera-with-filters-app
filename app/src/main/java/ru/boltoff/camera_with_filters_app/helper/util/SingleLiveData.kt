@@ -1,4 +1,4 @@
-package lv.slyfox.carguru.camera_with_filters_app.helper.util
+package ru.boltoff.camera_with_filters_app.helper.util
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner

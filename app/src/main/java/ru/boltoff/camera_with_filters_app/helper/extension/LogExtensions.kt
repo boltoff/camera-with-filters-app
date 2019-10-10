@@ -1,4 +1,4 @@
-package lv.slyfox.carguru.camera_with_filters_app.helper.extension
+package ru.boltoff.camera_with_filters_app.helper.extension
 
 import android.util.Log
 

@@ -1,9 +1,9 @@
-package lv.slyfox.carguru.camera_with_filters_app.helper.extension
+package ru.boltoff.camera_with_filters_app.helper.extension
 
 import android.app.Application
-import lv.slyfox.carguru.camera_with_filters_app.di.DIManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import ru.boltoff.camera_with_filters_app.di.DIManager
 
 fun Application.initDIModules() {
     startKoin {

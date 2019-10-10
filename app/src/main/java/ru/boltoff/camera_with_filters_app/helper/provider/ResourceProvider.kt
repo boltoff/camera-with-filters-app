@@ -1,4 +1,4 @@
-package lv.slyfox.carguru.camera_with_filters_app.helper.provider
+package ru.boltoff.camera_with_filters_app.helper.provider
 
 import android.content.Context
 import android.content.res.Configuration
