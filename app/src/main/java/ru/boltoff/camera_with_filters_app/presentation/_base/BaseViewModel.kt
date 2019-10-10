@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
-import lv.slyfox.carguru.camera_with_filters_app.helper.util.SingleLiveData
+import ru.boltoff.camera_with_filters_app.helper.util.SingleLiveData
 import kotlin.coroutines.CoroutineContext
 
 
