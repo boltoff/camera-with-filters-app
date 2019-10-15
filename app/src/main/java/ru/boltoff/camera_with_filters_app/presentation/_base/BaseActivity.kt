@@ -6,7 +6,7 @@ import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import lv.slyfox.carguru.camera_with_filters_app.R
+import ru.boltoff.camera_with_filters_app.R
 
 abstract class BaseActivity<VM> : AppCompatActivity(), BaseView<VM> {
 

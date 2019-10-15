@@ -22,12 +22,8 @@ fun SingleLiveData<Unit>.postCall() {
     postValue(Unit)
 }
 
-fun <T> AppCompatActivity.observe(liveData: LiveData<T?>, observer: ((T) -> Unit)) {
+fun <T> AppCompatActivity.observe(liveData: LiveData<T>, observer: ((T) -> Unit)) {
     liveData.observe(this, Observer {
-        if (it != null) {
-            observer.invoke(it)
-        } else {
-            "value is null".logAsDebug()
-        }
+        observer.invoke(it)
     })
 }

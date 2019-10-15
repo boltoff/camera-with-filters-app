@@ -2,17 +2,12 @@ package ru.boltoff.camera_with_filters_app.presentation._base
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 import ru.boltoff.camera_with_filters_app.helper.util.SingleLiveData
 import kotlin.coroutines.CoroutineContext
 
 
 abstract class BaseViewModel : ViewModel(), CoroutineScope {
-
-    init {
-        viewModelScope.launch { onStart() }
-    }
 
     protected val _showError = SingleLiveData<String>()
     val showError: LiveData<String> = _showError
@@ -22,8 +17,6 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
         exception.printStackTrace()
         _showError.postValue(exception.message.toString())
     }
-
-    protected abstract fun onStart()
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO + job + handler
