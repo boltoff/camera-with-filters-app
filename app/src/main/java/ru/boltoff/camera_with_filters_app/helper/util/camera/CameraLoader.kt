@@ -9,7 +9,7 @@ import android.util.Size
 import ru.boltoff.camera_with_filters_app.helper.extension.generateNV21Data
 import ru.boltoff.camera_with_filters_app.helper.extension.logAsError
 
-class Camera2Loader(private val context: Context) {
+class CameraLoader(private val context: Context) {
 
     private var onPreviewFrame: ((data: ByteArray, width: Int, height: Int) -> Unit)? = null
     private var cameraInstance: CameraDevice? = null

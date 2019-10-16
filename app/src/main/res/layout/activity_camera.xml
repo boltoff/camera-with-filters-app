@@ -5,6 +5,7 @@
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:keepScreenOn="true"
     tools:context="ru.boltoff.camera_with_filters_app.presentation.camera.CameraActivity">
 
     <jp.co.cyberagent.android.gpuimage.GPUImageView
@@ -19,7 +20,7 @@
         app:surface_type="texture_view" />
 
     <Button
-        android:id="@+id/capture_button"
+        android:id="@+id/takePhotoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_large"

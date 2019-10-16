@@ -5,7 +5,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import ru.boltoff.camera_with_filters_app.helper.provider.ResourceProvider
 import ru.boltoff.camera_with_filters_app.helper.util.PermissionUtil
-import ru.boltoff.camera_with_filters_app.helper.util.camera.Camera2Loader
+import ru.boltoff.camera_with_filters_app.helper.util.camera.CameraLoader
 import ru.boltoff.camera_with_filters_app.presentation.camera.CameraViewModel
 
 object DIManager {
@@ -20,7 +20,7 @@ object DIManager {
             ResourceProvider(androidContext())
         }
         single {
-            Camera2Loader(androidContext())
+            CameraLoader(androidContext())
         }
         single {
             PermissionUtil(androidContext())

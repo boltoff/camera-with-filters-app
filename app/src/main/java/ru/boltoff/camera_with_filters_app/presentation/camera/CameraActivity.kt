@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_camera.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.boltoff.camera_with_filters_app.R
 import ru.boltoff.camera_with_filters_app.helper.extension.observe
+import ru.boltoff.camera_with_filters_app.helper.util.OnSwipeListener
 import ru.boltoff.camera_with_filters_app.presentation._base.BaseActivity
 
 class CameraActivity : BaseActivity<CameraViewModel>() {
@@ -21,14 +22,30 @@ class CameraActivity : BaseActivity<CameraViewModel>() {
     override fun initViews(savedInstanceState: Bundle?) {
         initGpuImage()
         checkCameraPermission()
+        initListeners()
     }
 
     override fun initViewModel(owner: LifecycleOwner) {
         super.initViewModel(owner)
 
-        observe(viewModel.updatePreview) {
-            gpuImageView.updatePreviewFrame(it.first, it.second, it.third)
+        with(viewModel) {
+            observe(updatePreview) {
+                gpuImageView.updatePreviewFrame(it.first, it.second, it.third)
+            }
+            observe(setFilter) {
+                gpuImageView.filter = it
+            }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        gpuImageView.doOnLayout { viewModel.onResume(it.height, it.width) }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.onPause()
     }
 
     private fun initGpuImage() {
@@ -42,13 +59,18 @@ class CameraActivity : BaseActivity<CameraViewModel>() {
         }.onDeclined { error -> viewModel.onPermissionDeclined(error) }
     }
 
-    override fun onResume() {
-        super.onResume()
-        gpuImageView.doOnLayout { viewModel.onResume(it.height, it.width) }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        viewModel.onPause()
+    private fun initListeners() {
+        takePhotoButton.setOnClickListener { viewModel.onTakePhotoButtonClick() }
+        gpuImageView.setOnTouchListener(
+            OnSwipeListener(
+                context = this,
+                onSwipeRight = {
+                    viewModel.onSwipeRight()
+                },
+                onSwipeLeft = {
+                    viewModel.onSwipeLeft()
+                }
+            )
+        )
     }
 }
