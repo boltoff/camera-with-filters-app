@@ -28,6 +28,6 @@ object DIManager {
     }
 
     private val viewModelModule = module {
-        viewModel { CameraViewModel(get(), get()) }
+        viewModel { CameraViewModel(get(), get(), get()) }
     }
 }

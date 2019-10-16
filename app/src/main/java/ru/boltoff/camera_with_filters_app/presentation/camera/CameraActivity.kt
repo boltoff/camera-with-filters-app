@@ -35,6 +35,11 @@ class CameraActivity : BaseActivity<CameraViewModel>() {
             observe(setFilter) {
                 gpuImageView.filter = it
             }
+            observe(savePhoto) {
+                gpuImageView.saveToPictures(it.first, it.second) { uri ->
+                    viewModel.onPictureSaved(uri, it.second)
+                }
+            }
         }
     }
 
@@ -54,13 +59,15 @@ class CameraActivity : BaseActivity<CameraViewModel>() {
     }
 
     private fun checkCameraPermission() {
-        askPermission(Manifest.permission.CAMERA) {
+        askPermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE) {
             viewModel.onPermissionAccepted()
         }.onDeclined { error -> viewModel.onPermissionDeclined(error) }
     }
 
     private fun initListeners() {
-        takePhotoButton.setOnClickListener { viewModel.onTakePhotoButtonClick() }
+        takePhotoButton.setOnClickListener {
+            viewModel.onTakePhotoButtonClick()
+        }
         gpuImageView.setOnTouchListener(
             OnSwipeListener(
                 context = this,

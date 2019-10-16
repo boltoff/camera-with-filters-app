@@ -7,5 +7,7 @@
 
     <!-- Messages -->
     <string name="message_something_went_wrong">Something went wrong</string>
+    <string name="message_can_not_save_photo">Error while saving image</string>
+    <string name="message_photo_saved_at">Saved at %s</string>
     <!---->
 </resources>

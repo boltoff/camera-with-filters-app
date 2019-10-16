@@ -24,6 +24,7 @@ abstract class BaseActivity<VM> : AppCompatActivity(), BaseView<VM> {
         viewModel?.takeIf { it is BaseViewModel }?.let { viewModel ->
             with(viewModel as BaseViewModel) {
                 showError.observe(owner, Observer { onErrorMessage(it) })
+                showMessage.observe(owner, Observer { onShowMessage(it) })
             }
         }
     }
@@ -33,5 +34,9 @@ abstract class BaseActivity<VM> : AppCompatActivity(), BaseView<VM> {
             else -> getString(R.string.message_something_went_wrong)
         }
         Toast.makeText(this, humanMessage, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun onShowMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

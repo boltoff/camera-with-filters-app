@@ -12,6 +12,10 @@ abstract class BaseViewModel : ViewModel(), CoroutineScope {
     protected val _showError = SingleLiveData<String>()
     val showError: LiveData<String> = _showError
 
+    protected val _showMessage = SingleLiveData<String>()
+    val showMessage: LiveData<String> = _showMessage
+
+
     private val job = SupervisorJob()
     private val handler = CoroutineExceptionHandler { _, exception ->
         exception.printStackTrace()
