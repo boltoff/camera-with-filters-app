@@ -19,4 +19,8 @@
     <dimen name="font_small">12sp</dimen>
     <dimen name="font_tiny">10sp</dimen>
     <dimen name="font_teeny">8sp</dimen>
+
+    <!-- custom sizes -->
+    <dimen name="normal_button_size">55dp</dimen>
+    <dimen name="bottom_button_margin">50dp</dimen>
 </resources>

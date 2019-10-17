@@ -21,13 +21,10 @@
 
     <Button
         android:id="@+id/takePhotoButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/spacing_large"
-        android:background="@color/colorPrimary"
-        android:padding="@dimen/spacing_normal"
-        android:text="@string/camera_button_take_snapshot"
-        android:textColor="@android:color/white"
+        android:layout_width="@dimen/normal_button_size"
+        android:layout_height="@dimen/normal_button_size"
+        android:layout_marginBottom="@dimen/bottom_button_margin"
+        android:background="@drawable/round_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

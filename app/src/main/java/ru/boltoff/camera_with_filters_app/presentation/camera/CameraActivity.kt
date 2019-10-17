@@ -1,6 +1,8 @@
 package ru.boltoff.camera_with_filters_app.presentation.camera
 
 import android.Manifest
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import androidx.core.view.doOnLayout
 import androidx.lifecycle.LifecycleOwner
@@ -11,10 +13,17 @@ import kotlinx.android.synthetic.main.activity_camera.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.boltoff.camera_with_filters_app.R
 import ru.boltoff.camera_with_filters_app.helper.extension.observe
+import ru.boltoff.camera_with_filters_app.helper.extension.showPermissionAlertDialog
 import ru.boltoff.camera_with_filters_app.helper.util.OnSwipeListener
 import ru.boltoff.camera_with_filters_app.presentation._base.BaseActivity
 
+
 class CameraActivity : BaseActivity<CameraViewModel>() {
+
+    companion object {
+        private const val PROPERTY_SCALE_X = "scaleX"
+        private const val PROPERTY_SCALE_Y = "scaleY"
+    }
 
     override val layoutId: Int = R.layout.activity_camera
     override val viewModel: CameraViewModel by viewModel()
@@ -40,6 +49,9 @@ class CameraActivity : BaseActivity<CameraViewModel>() {
                     viewModel.onPictureSaved(uri, it.second)
                 }
             }
+            observe(changeButtonSize) {
+                animateButtonResizing(it.first, it.second)
+            }
         }
     }
 
@@ -61,12 +73,35 @@ class CameraActivity : BaseActivity<CameraViewModel>() {
     private fun checkCameraPermission() {
         askPermission(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE) {
             viewModel.onPermissionAccepted()
-        }.onDeclined { error -> viewModel.onPermissionDeclined(error) }
+        }.onDeclined { error ->
+            showPermissionAlertDialog {
+                viewModel.onPermissionDeclined(error)
+            }
+        }
+    }
+
+    private fun animateButtonResizing(scale: Float, durationTime: Long) {
+        AnimatorSet().apply {
+            play(
+                ObjectAnimator.ofFloat(
+                    takePhotoButton,
+                    PROPERTY_SCALE_X,
+                    scale
+                ).apply { duration = durationTime }
+            ).with(
+                ObjectAnimator.ofFloat(
+                    takePhotoButton,
+                    PROPERTY_SCALE_Y,
+                    scale
+                ).apply { duration = durationTime }
+            )
+        }.start()
     }
 
     private fun initListeners() {
-        takePhotoButton.setOnClickListener {
-            viewModel.onTakePhotoButtonClick()
+        takePhotoButton.setOnTouchListener { _, event ->
+            viewModel.onTouch(event)
+            return@setOnTouchListener true
         }
         gpuImageView.setOnTouchListener(
             OnSwipeListener(

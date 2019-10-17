@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Camera With Filters App</string>
 
-    <!-- Camera screen -->
-    <string name="camera_button_take_snapshot">Take snapshot</string>
+    <!-- Permissions -->
+    <string name="permissions_dialog_title">Permissions</string>
+    <string name="permissions_dialog_text">You need to allow camera and storage permissions for this application</string>
+    <string name="permissions_dialog_button_positive">Allow</string>
+    <string name="permissions_dialog_button_negative">Exit</string>
     <!---->
 
     <!-- Messages -->

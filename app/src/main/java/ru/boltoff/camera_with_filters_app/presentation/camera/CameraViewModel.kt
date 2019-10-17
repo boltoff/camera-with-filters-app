@@ -2,6 +2,7 @@ package ru.boltoff.camera_with_filters_app.presentation.camera
 
 import android.Manifest
 import android.net.Uri
+import android.view.MotionEvent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.github.florent37.runtimepermission.PermissionResult
@@ -31,6 +32,10 @@ class CameraViewModel(
 
         private const val PHOTO_FOLDER_NAME = "CameraWithFiltersApp"
         private const val JPG_EXTENSION = ".jpg"
+
+        private const val BUTTON_SIZE_CHANGING_DURATION = 300L
+        private const val BUTTON_SIZE_CHANGING_SCALE_NORMAL = 1f
+        private const val BUTTON_SIZE_CHANGING_SCALE_INCREASED = 1.5f
     }
 
     private val _updatePreview = MutableLiveData<Triple<ByteArray, Int, Int>>()
@@ -41,6 +46,9 @@ class CameraViewModel(
 
     private val _savePhoto = SingleLiveData<Pair<String, String>>()
     val savePhoto: LiveData<Pair<String, String>> = _savePhoto
+
+    private val _changeButtonSize = SingleLiveData<Pair<Float, Long>>()
+    val changeButtonSize: LiveData<Pair<Float, Long>> = _changeButtonSize
 
     private var currentPosition = 0
 
@@ -61,11 +69,23 @@ class CameraViewModel(
     }
 
     fun onPermissionDeclined(permissionResult: PermissionResult) {
-
+        if (permissionResult.hasForeverDenied()) {
+            permissionResult.goToSettings()
+            return
+        }
+        permissionResult.askAgain()
     }
 
-    fun onTakePhotoButtonClick() {
-        _savePhoto.value = Pair(PHOTO_FOLDER_NAME, "${System.currentTimeMillis()}$JPG_EXTENSION")
+    fun onTouch(event: MotionEvent) {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                changeButtonSize(BUTTON_SIZE_CHANGING_SCALE_INCREASED)
+            }
+            MotionEvent.ACTION_UP -> {
+                changeButtonSize(BUTTON_SIZE_CHANGING_SCALE_NORMAL)
+                takePhoto()
+            }
+        }
     }
 
     fun onPictureSaved(uri: Uri?, photoName: String) {
@@ -89,6 +109,17 @@ class CameraViewModel(
         if (currentPosition < FILTERS_COUNT) {
             changeFilter(currentPosition + 1)
         }
+    }
+
+    private fun takePhoto() {
+        _savePhoto.value = Pair(PHOTO_FOLDER_NAME, "${System.currentTimeMillis()}$JPG_EXTENSION")
+    }
+
+    private fun changeButtonSize(scale: Float) {
+        _changeButtonSize.value = Pair(
+            scale,
+            BUTTON_SIZE_CHANGING_DURATION
+        )
     }
 
     private fun changeFilter(position: Int) {
